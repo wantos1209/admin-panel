@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="/template/AdminLTE-3.2.0/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="/template/AdminLTE-3.2.0/dist/css/adminlte.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
     <!-- Tambahkan CSS untuk memperbaiki posisi Swal -->
     <style>
         body.swal2-shown {

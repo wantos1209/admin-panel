@@ -9,10 +9,16 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     // Menampilkan daftar user
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
-        return view('users.index', compact('users'));
+        $search = $request->input('search');
+
+        $users = User::when($search, function ($query, $search) {
+            return $query->where('username', 'like', '%' . $search . '%')
+                ->orWhere('name', 'like', '%' . $search . '%');
+        })->orderBy('created_at', 'DESC')->get();
+
+        return view('users.index', compact('users', 'search'));
     }
 
     // Form untuk membuat user baru
@@ -28,6 +34,9 @@ class UserController extends Controller
             'name' => 'required',
             'username' => 'required|unique:users',
             'password' => 'required|min:6|confirmed',
+        ], [
+            'password.confirmed' => 'Password dan konfirmasi password tidak cocok.',
+            'username.unique' => 'Username sudah digunakan, silakan pilih yang lain.',
         ]);
 
         User::create([
@@ -57,6 +66,10 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'username' => 'required|unique:users,username,' . $user->id,
+            'password' => 'nullable|min:6|confirmed',
+        ], [
+            'password.confirmed' => 'Password dan konfirmasi password tidak cocok.',
+            'username.unique' => 'Username sudah digunakan, silakan pilih yang lain.',
         ]);
 
         $user->update([
@@ -64,6 +77,11 @@ class UserController extends Controller
             'username' => $request->username,
         ]);
 
+        if ($request->filled('password')) {
+            $user->update([
+                'password' => Hash::make($request->password),
+            ]);
+        }
         return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }
 
