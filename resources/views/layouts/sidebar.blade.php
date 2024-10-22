@@ -46,6 +46,14 @@
             </li>
             <li class="nav-header">Pengaturan</li>
             <li class="nav-item">
+                <a href="/usersapk" class="nav-link">
+                    <i class="nav-icon fas fa-user"></i>
+                    <p>
+                        User Apk
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="/users" class="nav-link">
                     <i class="nav-icon fas fa-users"></i>
                     <p>

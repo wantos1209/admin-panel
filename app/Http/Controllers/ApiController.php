@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Subarea;
 use App\Models\User;
+use App\Models\Userapk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -17,6 +19,7 @@ class ApiController extends Controller
     {
         $token = $request->bearerToken();
         $nostt = $request->input('nostt');
+        $username = $request->username;
 
         $checkToken = $this->checkToken($token);
         if (!$checkToken) {
@@ -30,25 +33,39 @@ class ApiController extends Controller
         if ($response->successful()) {
             $data = $response->json();
             $results = $data["data"][0];
+
             if ($results["is_exist"] === true) {
-                // dd($results["destination"]);
+                $subarea_nama = $this->getSubarea($results["destination"]);
+                // $subarea_id = Userapk::where('username', $username)->first()->subarea_id;
+                // $subarea_nama = Subarea::where('id', $subarea_id)->first()->subarea_nama;
 
-                $input = 'BATAM KOTA, BATAM, BATAM';
-                // Pisahkan string berdasarkan koma
-                $segments = explode(',', $input);
-
-                // Trim semua segmen untuk menghilangkan spasi berlebih
-                $segments = array_map('trim', $segments);
-                $totalSegments = count($segments);
-                if ($totalSegments >= 3) {
-                    // Ambil kata ketiga dari belakang
-                    return $segments[$totalSegments - 3];
-                }
-                dd('salah');
+                $data = [
+                    'is_exist' => $results["is_exist"],
+                    'stt' => $results["q"],
+                    'daerah' => $subarea_nama,
+                ];
+            } else {
+                $data = [
+                    'is_exist' => $results["is_exist"],
+                    'stt' => $results["q"],
+                    'daerah' => '',
+                ];
             }
+
             return $data;
         } else {
             return response()->json(['error' => 'Unable to fetch data'], $response->status());
+        }
+    }
+
+    private function getSubarea($alamat)
+    {
+        $segments = explode(',', $alamat);
+
+        $segments = array_map('trim', $segments);
+        $totalSegments = count($segments);
+        if ($totalSegments >= 3) {
+            return $segments[$totalSegments - 3];
         }
     }
 
