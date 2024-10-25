@@ -15,7 +15,8 @@ class SubareaController extends Controller
         $search = $request->input('search');
 
         $subareas = Subarea::when($search, function ($query, $search) {
-            return $query->where('subarea.subarea_nama', 'like', '%' . $search . '%');
+            return $query->where('subarea.subarea_nama', 'like', '%' . $search . '%')
+            ->orWhere('area.area_nama', 'like', '%' . $search . '%');
         })
         ->join('area', 'area.id', '=', 'subarea.area_id')
         ->select('subarea.*', 'area.area_nama')

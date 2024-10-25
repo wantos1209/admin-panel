@@ -16,7 +16,9 @@ class UserapkController extends Controller
         $search = $request->input('search');
 
         $userapks = Userapk::when($search, function ($query, $search) {
-            return $query->where('userapk.userapk_nama', 'like', '%' . $search . '%');
+             return $query->where('subarea.subarea_nama', 'like', '%' . $search . '%')
+            ->orWhere('area.area_nama', 'like', '%' . $search . '%')
+            ->orWhere('userapk.username', 'like', '%' . $search . '%');
         })
         ->join('subarea', 'subarea.id', '=', 'userapk.subarea_id')
         ->join('area', 'area.id', '=', 'subarea.area_id')
