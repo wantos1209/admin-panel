@@ -18,7 +18,7 @@
     </div>
 
     <!-- SidebarSearch Form -->
-    <div class="form-inline">
+    {{-- <div class="form-inline">
         <div class="input-group" data-widget="sidebar-search">
             <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
             <div class="input-group-append">
@@ -27,7 +27,7 @@
                 </button>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Sidebar Menu -->
     <nav class="mt-2">
@@ -36,20 +36,46 @@
    with font-awesome or any other icon font library -->
 
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/dashboard" class="nav-link">
                     <i class="nav-icon fas fa-tachometer-alt"></i>
                     <p>
                         Dashboard
-                        <span class="right badge badge-danger">New</span>
+                        {{-- <span class="right badge badge-danger">New</span> --}}
                     </p>
                 </a>
             </li>
+            <li class="nav-header">Transkasi</li>
+            <li class="nav-item">
+                <a href="/pengiriman" class="nav-link">
+                    <i class="nav-icon fas fa-truck"></i>
+                    <p>
+                        Pengiriman
+                    </p>
+                </a>
+            </li>
+
             <li class="nav-header">Pengaturan</li>
             <li class="nav-item">
-                <a href="/usersapk" class="nav-link">
-                    <i class="nav-icon fas fa-user"></i>
+                <a href="/areas" class="nav-link">
+                    <i class="nav-icon fas fa-globe"></i>
                     <p>
-                        User Apk
+                        Kota
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/subareas" class="nav-link">
+                    <i class="nav-icon fas fa-location-arrow"></i>
+                    <p>
+                        Kecamatan
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/userapks" class="nav-link">
+                    <i class="nav-icon fas fa-mobile"></i>
+                    <p>
+                        User Aplikasi
                     </p>
                 </a>
             </li>
@@ -57,7 +83,7 @@
                 <a href="/users" class="nav-link">
                     <i class="nav-icon fas fa-users"></i>
                     <p>
-                        User Manajemen
+                        User Panel
                     </p>
                 </a>
             </li>

@@ -2,10 +2,10 @@
 
 @section('content')
 <div class="p-3">
-        <!-- Tombol Add User di bagian paling atas kanan -->
+        <!-- Tombol Add Kota di bagian paling atas kanan -->
         <div class="d-flex justify-content-end p-2">
-            <a href="{{ route('users.create') }}" class="btn btn-primary">
-                <i class="fas fa-plus mr-1"></i> Add User
+            <a href="{{ route('areas.create') }}" class="btn btn-primary">
+                <i class="fas fa-plus mr-1"></i> Tambah
             </a>
         </div>
 
@@ -25,9 +25,9 @@
 
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">User List</h3>
+                <h3 class="card-title">List Kota</h3>
                 <div class="card-tools">
-                    <form action="/users" class="input-group input-group-sm" style="width: 150px;">
+                    <form action="/areas" class="input-group input-group-sm" style="width: 150px;">
                         <input type="text" name="search" value="{{ $search }}" class="form-control float-right"
                             placeholder="Search">
                         <div class="input-group-append">
@@ -45,24 +45,22 @@
                     <thead>
                         <tr>
                             <th width="100px">No</th>
-                            <th>Nama</th>
-                            <th>Username</th>
-                            <th width="100px">Actions</th>
+                            <th>Kota</th>
+                            <th width="100px">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($users as $index => $user)
+                        @foreach ($areas as $index => $area)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->username }}</td>
+                                <td>{{ $area->area_nama }}</td>
                                 <td>
-                                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                    <form action="{{ route('users.destroy', $user->id) }}" method="POST"
+                                    <a href="{{ route('areas.edit', $area->id) }}" class="btn btn-warning btn-sm">Ubah</a>
+                                    <form action="{{ route('areas.destroy', $area->id) }}" method="POST"
                                         class="delete-form" style="display:inline-block;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="button" class="btn btn-danger btn-sm delete-btn">Delete</button>
+                                        <button type="button" class="btn btn-danger btn-sm delete-btn">Hapus</button>
                                     </form>
                                 </td>
                             </tr>
@@ -96,7 +94,7 @@
                         cancelButtonText: 'Batal'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            // Submit form jika user mengkonfirmasi penghapusan
+                            // Submit form jika area mengkonfirmasi penghapusan
                             this.closest('form').submit();
                         }
                     });
