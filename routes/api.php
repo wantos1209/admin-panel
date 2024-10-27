@@ -20,3 +20,4 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/getdatastt', [ApiController::class, 'getDataStt']);
+Route::post('/login', [ApiController::class, 'login']);
