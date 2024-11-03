@@ -19,5 +19,6 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::get('/getdatastt', [ApiController::class, 'getDataStt']);
+Route::get('/getdestinasi/{stt}', [ApiController::class, 'getDestinasi']);
 Route::post('/login', [ApiController::class, 'login']);
+
