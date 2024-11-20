@@ -25,7 +25,7 @@ class PengirimanController extends Controller
         ->join('area', 'area.id', '=', 'subarea.area_id')
         ->select('pengiriman.*', 'area.area_nama', 'subarea.subarea_nama', 'userapk.username')
         ->orderBy('pengiriman.created_at', 'DESC')
-        ->paginate(1); // Mengatur jumlah item per halaman
+        ->paginate(20); // Mengatur jumlah item per halaman
 
         return view('pengirimans.index', compact('pengirimans', 'search'));
     }
