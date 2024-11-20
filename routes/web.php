@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SubareaController;
+use App\Http\Controllers\PengirimanController;
 use App\Http\Controllers\UserapkController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('layouts.main');
+    return redirect()->route('pengirimans.index');
 })->Middleware('auth');
 
 Route::get('/login', [LoginController::class, 'index'])->name('login')->Middleware('guest');
@@ -31,8 +32,10 @@ Route::post('/logout', [LoginController::class, 'logout'])->Middleware('auth')->
 /* Middleware */
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::resource('pengiriman', UserController::class);
+    // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('pengirimans', PengirimanController::class);
+    Route::get('/pengirimans/{id}/details', [PengirimanController::class, 'getDetails']);
+    Route::get('/pengirimans/{id}/export', [PengirimanController::class, 'export'])->name('pengirimans.export');
     Route::resource('users', UserController::class);
     Route::resource('areas', AreaController::class);
     Route::resource('subareas', SubareaController::class);

@@ -9,6 +9,6 @@ class Pengiriman extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['subarea_id', 'username', 'password'];
+    protected $fillable = ['userapk_id', 'nomor'];
     protected $table = 'pengiriman';
 }

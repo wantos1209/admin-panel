@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('pengirimandetail', function (Blueprint $table) {
             $table->id();
             $table->integer('pengiriman_id');
+            $table->integer('subarea_id');
             $table->string('no_stt');
             $table->timestamps();
         });

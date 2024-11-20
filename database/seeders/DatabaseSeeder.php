@@ -25,7 +25,9 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             AreaTableSeeder::class,
             SubareaTableSeeder::class,
-            UserapkTableSeeder::class
+            UserapkTableSeeder::class,
+            PengirimanSeeder::class,
+            PengirimanDetailSeeder::class
         ]);
     }
 }
