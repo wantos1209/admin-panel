@@ -18,7 +18,7 @@
             <i class="far fa-user"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
-            <a href="#" class="dropdown-item text-center">Ganti password <i class="fas fa-lock ml-2"></i></a>
+            <a href="/changepassword/{{ auth()->User()->id }}" class="dropdown-item text-center">Ganti password <i class="fas fa-lock ml-2"></i></a>
             <a href="#" class="dropdown-item text-center"
                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 Logout <i class="fa fa-sign-out-alt ml-2"></i>

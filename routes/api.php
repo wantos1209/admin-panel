@@ -22,3 +22,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/getdestinasi/{stt}', [ApiController::class, 'getDestinasi']);
 Route::post('/login', [ApiController::class, 'login']);
 
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/createpengiriman', [ApiController::class, 'createPengiriman']);
+    Route::post('/createdetailpengiriman/{pengiriman_id}', [ApiController::class, 'createDetailPengiriman']);
+});
+

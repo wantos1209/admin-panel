@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pengiriman;
+use App\Models\Pengirimandetail;
 use App\Models\Subarea;
 use App\Models\User;
 use App\Models\Userapk;
@@ -15,10 +17,72 @@ class ApiController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function createPengiriman(Request $request) {
+        try {
+            $request->validate([
+                'userapk_id' => 'required',
+                'nomor' => 'required',
+            ]);
+    
+            $userapk_id = $request->userapk_id;
+            $nomor = $request->nomor;
+           
+            $data = Pengiriman::create([
+                'userapk_id' => $userapk_id,
+                'nomor' => $nomor
+            ]);
+
+            return response()->json([
+                'status' => 'Success',
+                'message' => 'Create pengiriman successfully',
+                'data' => $data
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'An error occurred during login',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+        
+    }
+
+    public function createDetailPengiriman(Request $request) {
+        try {
+            $request->validate([
+                'pengiriman_id' => 'required',
+                'subarea_id' => 'required',
+                'no_stt' => 'required'
+            ]);
+    
+            $pengiriman_id = $request->pengiriman_id;
+            $subarea_id = $request->subarea_id;
+            $no_stt = $request->no_stt;
+           
+            $data = Pengirimandetail::create([
+                'pengiriman_id' => $pengiriman_id,
+                'subarea_id' => $subarea_id,
+                'no_stt' => $no_stt
+            ]);
+
+            return response()->json([
+                'status' => 'Success',
+                'message' => 'Create pengiriman detail successfully',
+                'data' => $data
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'An error occurred during login',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+        
+    }
+
     public function login(Request $request) {
         try {
             $token = $request->bearerToken();
-            
             $checkToken = $this->checkToken($token);
     
             if (!$checkToken) {

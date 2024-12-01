@@ -37,6 +37,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pengirimans/{id}/details', [PengirimanController::class, 'getDetails']);
     Route::get('/pengirimans/{id}/export', [PengirimanController::class, 'export'])->name('pengirimans.export');
     Route::resource('users', UserController::class);
+    Route::get('/changepassword/{id}', [UserController::class, 'editPassword'])->name('users.editPassword');
+    Route::post('/changepassword/{id}', [UserController::class, 'changePassword'])->name('users.changePassword');
     Route::resource('areas', AreaController::class);
     Route::resource('subareas', SubareaController::class);
     Route::resource('userapks', UserapkController::class);
