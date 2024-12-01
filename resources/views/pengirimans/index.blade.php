@@ -45,6 +45,7 @@
                     <thead>
                         <tr>
                             <th width="100px">No</th>
+                            <th>Nomor</th>
                             <th>Kota</th>
                             <th>Kecamatan</th>
                             <th>User Kurir</th>
@@ -56,6 +57,7 @@
                         @foreach ($pengirimans as $index => $pengiriman)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
+                                <td>{{ $pengiriman->nomor }}</td>
                                 <td>{{ $pengiriman->area_nama }}</td>
                                 <td>{{ $pengiriman->subarea_nama }}</td>
                                 <td>{{ $pengiriman->username }}</td>

@@ -11,4 +11,48 @@ class Pengiriman extends Model
 
     protected $fillable = ['userapk_id', 'nomor'];
     protected $table = 'pengiriman';
+
+     // Event: generate nomor saat create
+     protected static function booted()
+     {
+         static::creating(function ($pengiriman) {
+             // Ambil nomor terakhir yang ada di database (diurutkan berdasarkan nomor, desimal)
+             $lastPengiriman = Pengiriman::latest('nomor')->first();
+ 
+             // Generate nomor baru
+             $newNomor = $pengiriman->generateNomor($lastPengiriman ? $lastPengiriman->nomor : null);
+ 
+             // Assign nomor ke model
+             $pengiriman->nomor = $newNomor;
+         });
+     }
+
+     // Fungsi untuk generate nomor
+    public function generateNomor($lastNumber)
+    {
+        $lastYear = $lastNumber ? substr($lastNumber, 1, 2) : null;
+        $lastMonth = $lastNumber ? substr($lastNumber, 3, 2) : null;
+        $lastSeq = $lastNumber ? (int)substr($lastNumber, 5, 3) : 0;
+
+        $currentYear = date("y");
+        $currentMonth = date("m");
+
+        // Jika tahun dan bulan sama, increment sequence, jika tidak reset ke 1
+        if ($lastYear == $currentYear && $lastMonth == $currentMonth) {
+            $lastSeq++;
+        } else {
+            $lastSeq = 1;
+        }
+
+        // Generate nomor baru
+        $newNumber = 'P' . $currentYear . $currentMonth . str_pad($lastSeq, 3, '0', STR_PAD_LEFT);
+
+        // Pastikan nomor unik
+        while (Pengiriman::where('nomor', $newNumber)->exists()) {
+            $lastSeq++;
+            $newNumber = 'P' . $currentYear . $currentMonth . str_pad($lastSeq, 3, '0', STR_PAD_LEFT);
+        }
+
+        return $newNumber;
+    }
 }

@@ -19,17 +19,10 @@ class ApiController extends Controller
      */
     public function createPengiriman(Request $request) {
         try {
-            $request->validate([
-                'userapk_id' => 'required',
-                'nomor' => 'required',
-            ]);
-    
-            $userapk_id = $request->userapk_id;
-            $nomor = $request->nomor;
+            $userapk_id = Auth::user()->id;
            
             $data = Pengiriman::create([
-                'userapk_id' => $userapk_id,
-                'nomor' => $nomor
+                'userapk_id' => $userapk_id
             ]);
 
             return response()->json([
@@ -180,5 +173,24 @@ class ApiController extends Controller
             return false;
         }
         return true;
+    }
+
+    function generateNomor($lastNumber) {
+        $lastYear = substr($lastNumber, 1, 2);  
+        $lastMonth = substr($lastNumber, 3, 2);
+        $lastSeq = (int)substr($lastNumber, 5, 3); 
+    
+        $currentYear = date("y");  
+        $currentMonth = date("m");
+    
+        if ($lastYear == $currentYear && $lastMonth == $currentMonth) {
+            $lastSeq++; 
+        } else {
+            $lastSeq = 1;
+        }
+    
+        $newNumber = 'P' . $currentYear . $currentMonth . str_pad($lastSeq, 3, '0', STR_PAD_LEFT);
+    
+        return $newNumber;
     }
 }
