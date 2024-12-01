@@ -48,6 +48,7 @@
                             <th>Kota</th>
                             <th>Kecamatan</th>
                             <th>User Kurir</th>
+                            <th>Tanggal</th>
                             <th width="100px">Aksi</th>
                         </tr>
                     </thead>
@@ -58,6 +59,7 @@
                                 <td>{{ $pengiriman->area_nama }}</td>
                                 <td>{{ $pengiriman->subarea_nama }}</td>
                                 <td>{{ $pengiriman->username }}</td>
+                                <td>{{ date('d-m-Y H:i:s', strtotime($pengiriman->created_at)) }}</td>
                                 <td>
                                     <button  type="button" class="btn btn-primary btn-sm detail-btn" data-id="{{ $pengiriman->id }}" data-toggle="modal" data-target="#modal-xl">
                                         Detail
