@@ -12,6 +12,11 @@ class Pengiriman extends Model
     protected $fillable = ['userapk_id', 'nomor'];
     protected $table = 'pengiriman';
 
+    protected $casts = [
+        'created_at' => 'datetime:d-m-Y H:i:s',
+        'updated_at' => 'datetime:d-m-Y H:i:s',
+    ];
+
      // Event: generate nomor saat create
      protected static function booted()
      {
