@@ -40,6 +40,27 @@ class ApiController extends Controller
         
     }
 
+    public function indexpengiriman()
+    {
+        $userapk_id = Auth::user()->id;
+        $data = Pengiriman::where('userapk_id', $userapk_id)->get();
+        return response()->json([
+            'status' => 'Success',
+            'message' => 'Fetched pengiriman successfully',
+            'data' => $data
+        ]);
+    }
+
+    public function indexpengirimandetail($pengiriman_id)
+    {
+        $data = Pengirimandetail::where('pengiriman_id', $pengiriman_id)->get();
+        return response()->json([
+            'status' => 'Success',
+            'message' => 'Fetched pengiriman successfully',
+            'data' => $data
+        ]);
+    }
+
     public function createDetailPengiriman(Request $request) {
         try {
             $request->validate([
