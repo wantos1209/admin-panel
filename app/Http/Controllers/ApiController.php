@@ -7,6 +7,7 @@ use App\Models\Pengirimandetail;
 use App\Models\Subarea;
 use App\Models\User;
 use App\Models\Userapk;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -43,7 +44,11 @@ class ApiController extends Controller
     public function indexpengiriman()
     {
         $userapk_id = Auth::user()->id;
-        $data = Pengiriman::where('userapk_id', $userapk_id)->orderBy('created_at', 'DESC')->get();
+        $data = Pengiriman::where('userapk_id', $userapk_id)->orderBy('created_at', 'DESC')->take(20)->get()
+        ->map(function ($item) {
+            $item->created_at = Carbon::parse($item->created_at)->format('d-m-Y H:i:s');
+            return $item;
+        });
         return response()->json([
             'status' => 'Success',
             'message' => 'Fetched pengiriman successfully',
@@ -53,7 +58,11 @@ class ApiController extends Controller
 
     public function indexpengirimandetail($pengiriman_id)
     {
-        $data = Pengirimandetail::where('pengiriman_id', $pengiriman_id)->orderBy('created_at', 'DESC')->get();
+        $data = Pengirimandetail::where('pengiriman_id', $pengiriman_id)->orderBy('created_at', 'DESC')->take(20)->get()
+        ->map(function ($item) {
+            $item->created_at = Carbon::parse($item->created_at)->format('d-m-Y H:i:s');
+            return $item;
+        });
         return response()->json([
             'status' => 'Success',
             'message' => 'Fetched pengiriman successfully',
