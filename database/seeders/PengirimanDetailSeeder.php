@@ -14,14 +14,14 @@ class PengirimanDetailSeeder extends Seeder
     public function run(): void
     {
         Pengirimandetail::create([
-            'id' => 1,
+            'id' => 3,
             'pengiriman_id' => 1,
             'subarea_id' => 1,
             'no_stt' => '95LP1727930360984'
         ]);
 
         Pengirimandetail::create([
-            'id' => 2,
+            'id' => 4,
             'pengiriman_id' => 2,
             'subarea_id' => 1,
             'no_stt' => '95LP1727989053662'

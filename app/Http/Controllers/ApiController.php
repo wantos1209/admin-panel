@@ -58,7 +58,11 @@ class ApiController extends Controller
 
     public function indexpengirimandetail($pengiriman_id)
     {
-        $data = Pengirimandetail::where('pengiriman_id', $pengiriman_id)->orderBy('created_at', 'DESC')->take(20)->get()
+        $data = Pengirimandetail::join('subarea', 'pengirimandetail.subarea_id', '=', 'subarea.id')
+        ->where('pengirimandetail.pengiriman_id', $pengiriman_id)
+        ->orderBy('pengirimandetail.created_at', 'DESC')
+        ->take(20)
+        ->get(['pengirimandetail.*', 'subarea.subarea_nama'])
         ->map(function ($item) {
             $item->created_at = Carbon::parse($item->created_at)->format('d-m-Y H:i:s');
             return $item;
