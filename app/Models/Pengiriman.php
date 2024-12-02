@@ -60,4 +60,9 @@ class Pengiriman extends Model
 
         return $newNumber;
     }
+
+    public function pengirimandetails()
+    {
+        return $this->hasMany(Pengirimandetail::class, 'pengiriman_id', 'id');
+    }
 }

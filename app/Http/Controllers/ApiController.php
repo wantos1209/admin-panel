@@ -43,12 +43,26 @@ class ApiController extends Controller
 
     public function indexpengiriman()
     {
-        $userapk_id = Auth::user()->id;
-        $data = Pengiriman::where('userapk_id', $userapk_id)->orderBy('created_at', 'DESC')->take(20)->get()
+        $datauser = Auth::user();
+        $userapk_id= $datauser->id;
+        $exclude_subarea_id = $datauser->subarea_id;
+
+      
+        $data = Pengiriman::where('userapk_id', $userapk_id)
+        ->withCount([
+            'pengirimandetails as totalbarang', // Count tanpa filter
+            'pengirimandetails as totalbarang_miss' => function ($query) use ($exclude_subarea_id) {
+                $query->where('subarea_id', '!=', $exclude_subarea_id); // Count dengan filter
+            }
+        ])
+        ->orderBy('created_at', 'DESC')
+        ->take(20)
+        ->get()
         ->map(function ($item) {
             $item->created_at = Carbon::parse($item->created_at)->format('d-m-Y H:i:s');
             return $item;
         });
+
         return response()->json([
             'status' => 'Success',
             'message' => 'Fetched pengiriman successfully',
