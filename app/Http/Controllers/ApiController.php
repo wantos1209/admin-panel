@@ -103,8 +103,9 @@ class ApiController extends Controller
         return response()->json([
             'status' => 'Success',
             'message' => 'Fetched pengiriman successfully',
-            'data' => $data,
-            'dataPengiriman' => $dataPengiriman
+            'data' => $dataPengiriman,
+            'data_detail' => $data,
+            
         ]);
     }
 
