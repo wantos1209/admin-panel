@@ -173,7 +173,10 @@ class ApiController extends Controller
                     'token' => $token
                 ], 200);
             } else {
-                return response()->json(['error' => 'Invalid credentials'], 401);
+                return response()->json([
+                    'status' => 'error',
+                    "message" => "Invalid username or password"
+                ], 401);
             }
         } catch (\Exception $e) {
             return response()->json([
