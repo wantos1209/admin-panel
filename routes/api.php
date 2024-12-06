@@ -24,8 +24,8 @@ Route::post('/login', [ApiController::class, 'login']);
 
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/pengiriman', [ApiController::class, 'indexpengiriman']);
-    Route::get('/pengirimandetail/{pengiriman_id}', [ApiController::class, 'indexpengirimandetail']);
+    Route::post('/pengiriman', [ApiController::class, 'indexpengiriman']);
+    Route::post('/pengirimandetail/{pengiriman_id}', [ApiController::class, 'indexpengirimandetail']);
     Route::post('/createpengiriman', [ApiController::class, 'createPengiriman']);
     Route::post('/createdetailpengiriman/{pengiriman_id}', [ApiController::class, 'createDetailPengiriman']);
 });
