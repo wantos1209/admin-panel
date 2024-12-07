@@ -187,16 +187,8 @@ class ApiController extends Controller
     }
     
 
-    public function getDestinasi(Request $request, $nostt)
+    public function getDestinasi($nostt)
     {
-        $token = $request->bearerToken();
-        $username = $request->username;
-
-        $checkToken = $this->checkToken($token);
-        if (!$checkToken) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-
         $url = 'https://api-internal-web.thelionparcel.com/v2/track/data?q=' . $nostt;
         $token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2dyb3VwIjoiQURNSU4iLCJhY2NvdW50X2lkIjoxLCJlbWFpbCI6Imxpb25wYXJjZWxAbGlvbnBhcmNlbC5jb20iLCJleHAiOjE4NzIzMTE2NjMsInBvc2l0aW9uIjoiU1RBRkYiLCJ1c2VybmFtZSI6Imxpb25wYXJjZWwifQ.GYc9YHeSwfq77PWynYaZT2wRrF9MG7iXDKYmtJnVXVw';
         $response = Http::withToken($token)->get($url);
