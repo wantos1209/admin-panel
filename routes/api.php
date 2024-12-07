@@ -28,6 +28,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/pengirimandetail/{pengiriman_id}', [ApiController::class, 'indexpengirimandetail']);
     Route::post('/createpengiriman', [ApiController::class, 'createPengiriman']);
     Route::post('/createdetailpengiriman/{pengiriman_id}', [ApiController::class, 'createDetailPengiriman']);
-    Route::get('/getdestinasi/{stt}', [ApiController::class, 'getDestinasi']);
+    Route::post('/getdestinasi/{stt}', [ApiController::class, 'getDestinasi']);
 });
 
