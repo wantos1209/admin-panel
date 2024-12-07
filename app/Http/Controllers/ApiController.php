@@ -187,17 +187,25 @@ class ApiController extends Controller
     }
     
 
-    public function getDestinasi($nostt)
+    public function getDestinasi(Request $request, $nostt)
     {
+        $pengiriman_id = $request->pengiriman_id;
+
         $url = 'https://api-internal-web.thelionparcel.com/v2/track/data?q=' . $nostt;
         $token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2dyb3VwIjoiQURNSU4iLCJhY2NvdW50X2lkIjoxLCJlbWFpbCI6Imxpb25wYXJjZWxAbGlvbnBhcmNlbC5jb20iLCJleHAiOjE4NzIzMTE2NjMsInBvc2l0aW9uIjoiU1RBRkYiLCJ1c2VybmFtZSI6Imxpb25wYXJjZWwifQ.GYc9YHeSwfq77PWynYaZT2wRrF9MG7iXDKYmtJnVXVw';
+        
         $response = Http::withToken($token)->get($url);
 
-        if ($response->successful()) {
-            $data = $response->json();
+        if (!$response->successful()) {
+            return response()->json(['error' => 'Unable to fetch data'], $response->status());
+        }
+
+        $data = $response->json();
+        
+        if (isset($data["data"][0])) {
             $results = $data["data"][0];
 
-            if ($results["is_exist"] === true) {
+            if (isset($results["is_exist"]) && $results["is_exist"] === true) {
                 $subarea_nama = $this->getSubarea($results["destination"]);
 
                 $data = [
@@ -205,6 +213,28 @@ class ApiController extends Controller
                     'stt' => $results["q"],
                     'daerah' => $subarea_nama,
                 ];
+
+                $checkExistStt = Pengirimandetail::where('pengiriman_id', $pengiriman_id)
+                    ->where('no_stt', $nostt)
+                    ->first();
+
+                if ($checkExistStt) {
+                    $data["is_exist"] = false;
+                } else {
+                    $subarea = Subarea::where('subarea_nama', $subarea_nama)->first();
+                    if(!$subarea) {
+                        Subarea::create([
+                            'area_id' => 1,
+                            'subarea_nama' => $subarea_nama
+                        ]);
+                    }
+
+                    Pengirimandetail::create([
+                        'pengiriman_id' => $pengiriman_id,
+                        'subarea_id' => $subarea->id,
+                        'no_stt' => $nostt
+                    ]);
+                }
             } else {
                 $data = [
                     'is_exist' => $results["is_exist"],
@@ -212,12 +242,13 @@ class ApiController extends Controller
                     'daerah' => '',
                 ];
             }
-
-            return $data;
         } else {
-            return response()->json(['error' => 'Unable to fetch data'], $response->status());
+            return response()->json(['error' => 'Invalid data structure from API'], 500);
         }
+
+        return $data;
     }
+
 
     private function getSubarea($alamat)
     {
