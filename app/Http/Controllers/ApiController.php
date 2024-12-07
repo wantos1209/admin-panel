@@ -288,4 +288,29 @@ class ApiController extends Controller
     
         return $newNumber;
     }
+
+    public function deleteDetail($pengiriman_id, $pengirimandetail_id) {
+        try {
+            if (!$pengiriman_id || !$pengirimandetail_id) {
+                return response()->json(['status' => 'failed', 'message' => 'ID pengiriman atau ID detail pengiriman tidak valid'], 400);
+            }
+    
+            $dataPengiriman = Pengiriman::find($pengiriman_id);
+            if (!$dataPengiriman) {
+                return response()->json(['status' => 'failed', 'message' => 'Pengiriman tidak terdaftar'], 404);
+            }
+    
+            $dataPengirimanDetail = Pengirimandetail::find($pengirimandetail_id);
+            if (!$dataPengirimanDetail) {
+                return response()->json(['status' => 'failed', 'message' => 'Detail pengiriman tidak ditemukan'], 404);
+            }
+    
+            $dataPengirimanDetail->delete();
+    
+            return response()->json(['status' => 'success', 'message' => 'Detail pengiriman berhasil dihapus'], 200);
+    
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'failed', 'message' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+        }
+    }
 }

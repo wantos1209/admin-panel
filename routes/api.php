@@ -29,5 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/createpengiriman', [ApiController::class, 'createPengiriman']);
     Route::post('/createdetailpengiriman/{pengiriman_id}', [ApiController::class, 'createDetailPengiriman']);
     Route::post('/getdestinasi/{stt}', [ApiController::class, 'getDestinasi']);
+    Route::delete('/pengiriman/{pengiriman_id}/details/{pengirimandetail_id}', [ApiController::class, 'deleteDetail']);
+
 });
 
