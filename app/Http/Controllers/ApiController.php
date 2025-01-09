@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Area;
 use App\Models\Pengiriman;
 use App\Models\Pengirimandetail;
 use App\Models\Subarea;
@@ -312,5 +313,14 @@ class ApiController extends Controller
         } catch (\Exception $e) {
             return response()->json(['status' => 'failed', 'message' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
         }
+    }
+
+    public function listsubarea() {
+        $data = Subarea::orderBy('subarea_nama')->get();
+        return  response()->json([
+            'status' => 'Success',
+            'message' => 'List pengiriman detail berhasil diambil',
+            'data' => $data
+        ]);
     }
 }
