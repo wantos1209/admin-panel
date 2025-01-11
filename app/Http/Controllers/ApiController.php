@@ -22,9 +22,11 @@ class ApiController extends Controller
     public function createPengiriman(Request $request) {
         try {
             $userapk_id = Auth::user()->id;
+            $subarea_id = $request->subarea_id;
            
             $data = Pengiriman::create([
-                'userapk_id' => $userapk_id
+                'userapk_id' => $userapk_id,
+                'subarea_id' => $subarea_id
             ]);
 
             return response()->json([
