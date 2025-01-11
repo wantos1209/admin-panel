@@ -21,7 +21,7 @@ class PengirimanController extends Controller
                 ->orWhere('area.area_nama', 'like', '%' . $search . '%');
         })
         ->join('userapk', 'userapk.id', '=', 'pengiriman.userapk_id')
-        ->join('subarea', 'subarea.id', '=', 'userapk.subarea_id')
+        ->join('subarea', 'subarea.id', '=', 'pengiriman.subarea_id')
         ->join('area', 'area.id', '=', 'subarea.area_id')
         ->select('pengiriman.*', 'area.area_nama', 'subarea.subarea_nama', 'userapk.username')
         ->orderBy('pengiriman.created_at', 'DESC')
