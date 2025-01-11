@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('pengiriman', function (Blueprint $table) {
             $table->id();
             $table->integer('userapk_id');
+            $table->integer('subarea_id');
             $table->string('nomor');
             $table->timestamps();
         });

@@ -42,18 +42,17 @@ class ApiController extends Controller
         
     }
 
-    public function indexpengiriman()
+    public function indexpengiriman($subarea_id)
     {
         $datauser = Auth::user();
         $userapk_id= $datauser->id;
-        $exclude_subarea_id = $datauser->subarea_id;
-
+        $exclude_subarea_id = $subarea_id;
       
-        $data = Pengiriman::where('userapk_id', $userapk_id)
+        $data = Pengiriman::where('userapk_id', $userapk_id)->where('subarea_id', $exclude_subarea_id)
         ->withCount([
-            'pengirimandetails as totalbarang', // Count tanpa filter
+            'pengirimandetails as totalbarang', 
             'pengirimandetails as totalbarang_miss' => function ($query) use ($exclude_subarea_id) {
-                $query->where('subarea_id', '!=', $exclude_subarea_id); // Count dengan filter
+                $query->where('subarea_id', '!=', $exclude_subarea_id);
             }
         ])
         ->orderBy('created_at', 'DESC')

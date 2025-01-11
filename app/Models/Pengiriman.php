@@ -9,7 +9,7 @@ class Pengiriman extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['userapk_id', 'nomor'];
+    protected $fillable = ['userapk_id', 'subarea_id', 'nomor'];
     protected $table = 'pengiriman';
 
     protected $casts = [
