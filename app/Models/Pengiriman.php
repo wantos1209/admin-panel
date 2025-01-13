@@ -65,4 +65,9 @@ class Pengiriman extends Model
     {
         return $this->hasMany(Pengirimandetail::class, 'pengiriman_id', 'id');
     }
+
+    public function subareas()
+    {
+        return $this->belongsTo(Subarea::class, 'subarea_id', 'id');
+    }
 }
