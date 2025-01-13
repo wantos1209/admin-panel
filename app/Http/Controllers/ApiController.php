@@ -85,7 +85,7 @@ class ApiController extends Controller
             'pengirimandetails as totalbarang_miss' => function ($query) use ($exclude_subarea_id) {
                 $query->where('subarea_id', '!=', $exclude_subarea_id); // Count dengan filter
             }
-        ])->with(['subareas'])
+        ])->with('subareas')
         ->first(); 
 
     if ($dataPengiriman) {
