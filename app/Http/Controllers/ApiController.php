@@ -223,7 +223,7 @@ class ApiController extends Controller
                     ->where('no_stt', $nostt)
                     ->first();
 
-
+                //a
                 if($daerah != $subarea_nama) {
                     $data["is_missrute"] = true;
                 } else {
