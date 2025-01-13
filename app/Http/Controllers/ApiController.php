@@ -96,7 +96,7 @@ class ApiController extends Controller
         $data = Pengirimandetail::join('subarea', 'pengirimandetail.subarea_id', '=', 'subarea.id')
         ->where('pengirimandetail.pengiriman_id', $pengiriman_id)
         ->orderBy('pengirimandetail.created_at', 'DESC')
-        ->take(20)
+        // ->take(20)
         ->get(['pengirimandetail.*', 'subarea.subarea_nama'])
         ->map(function ($item) {
             $item->created_at = Carbon::parse($item->created_at)->format('d-m-Y H:i:s');
@@ -286,7 +286,7 @@ class ApiController extends Controller
             $lastSeq = 1;
         }
     
-        $newNumber = 'P' . $currentYear . $currentMonth . str_pad($lastSeq, 3, '0', STR_PAD_LEFT);
+        $newNumber = $currentYear . $currentMonth . str_pad($lastSeq, 3, '0', STR_PAD_LEFT);
     
         return $newNumber;
     }
