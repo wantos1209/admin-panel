@@ -87,7 +87,7 @@ class ApiController extends Controller
                 $query->where('subarea_id', '!=', $exclude_subarea_id); // Count dengan filter
             }
         ])
-        ->select('pengiriman.*', 'subarea.subarea_nama') // Memilih kolom dari pengiriman dan subarea_nama
+        ->select('pengiriman.*', 'subarea.subarea_nama as areaname') // Memilih kolom dari pengiriman dan subarea_nama
         ->first(); // Mengambil hanya satu data
 
     if ($dataPengiriman) {
