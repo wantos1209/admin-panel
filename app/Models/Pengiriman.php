@@ -50,12 +50,12 @@ class Pengiriman extends Model
         }
 
         // Generate nomor baru
-        $newNumber = 'P' . $currentYear . $currentMonth . str_pad($lastSeq, 3, '0', STR_PAD_LEFT);
+        $newNumber = $currentYear . $currentMonth . str_pad($lastSeq, 3, '0', STR_PAD_LEFT);
 
         // Pastikan nomor unik
         while (Pengiriman::where('nomor', $newNumber)->exists()) {
             $lastSeq++;
-            $newNumber = 'P' . $currentYear . $currentMonth . str_pad($lastSeq, 3, '0', STR_PAD_LEFT);
+            $newNumber = $currentYear . $currentMonth . str_pad($lastSeq, 3, '0', STR_PAD_LEFT);
         }
 
         return $newNumber;
