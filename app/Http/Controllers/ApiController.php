@@ -194,6 +194,7 @@ class ApiController extends Controller
     public function getDestinasi(Request $request, $nostt)
     {
         $pengiriman_id = $request->pengiriman_id;
+        $daerah = $request->daerah;
 
         $url = 'https://api-internal-web.thelionparcel.com/v2/track/data?q=' . $nostt;
         $token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2dyb3VwIjoiQURNSU4iLCJhY2NvdW50X2lkIjoxLCJlbWFpbCI6Imxpb25wYXJjZWxAbGlvbnBhcmNlbC5jb20iLCJleHAiOjE4NzIzMTE2NjMsInBvc2l0aW9uIjoiU1RBRkYiLCJ1c2VybmFtZSI6Imxpb25wYXJjZWwifQ.GYc9YHeSwfq77PWynYaZT2wRrF9MG7iXDKYmtJnVXVw';
@@ -222,6 +223,13 @@ class ApiController extends Controller
                     ->where('no_stt', $nostt)
                     ->first();
 
+
+                if($daerah != $subarea_nama) {
+                    $data["is_missrute"] = true;
+                } else {
+                    $data["is_missrute"] = false;
+                }
+
                 if ($checkExistStt) {
                     $data["is_exist"] = false;
                 } else {
@@ -244,6 +252,7 @@ class ApiController extends Controller
                     'is_exist' => $results["is_exist"],
                     'stt' => $results["q"],
                     'daerah' => '',
+                    'is_missrute' => false
                 ];
             }
         } else {
