@@ -81,13 +81,14 @@ class ApiController extends Controller
         $dataPengiriman = Pengiriman::where('pengiriman.userapk_id', $userapk_id)
         ->where('pengiriman.id', $pengiriman_id)
         ->join('subarea', 'subarea.id', '=', 'pengiriman.subarea_id') // Melakukan join dengan tabel subarea
+       
+        ->select('pengiriman.*', 'subarea.subarea_nama as areaname') // Memilih kolom dari pengiriman dan subarea_nama
         ->withCount([
             'pengirimandetails as totalbarang', // Count tanpa filter
             'pengirimandetails as totalbarang_miss' => function ($query) use ($exclude_subarea_id) {
                 $query->where('subarea_id', '!=', $exclude_subarea_id); // Count dengan filter
             }
         ])
-        ->select('pengiriman.*', 'subarea.subarea_nama as areaname') // Memilih kolom dari pengiriman dan subarea_nama
         ->first(); // Mengambil hanya satu dat
 
     if ($dataPengiriman) {
