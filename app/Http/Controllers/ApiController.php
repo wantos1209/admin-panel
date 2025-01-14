@@ -88,7 +88,7 @@ class ApiController extends Controller
             }
         ])
         ->select('pengiriman.*', 'subarea.subarea_nama as areaname') // Memilih kolom dari pengiriman dan subarea_nama
-        ->first(); // Mengambil hanya satu data
+        ->first(); // Mengambil hanya satu dat
 
     if ($dataPengiriman) {
         // Format created_at jika data ditemukan
